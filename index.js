@@ -39,8 +39,8 @@ async function createStudent() {
     try {
         const data = await Student.create({
             firstName: "Ruhul Amin", // treat korche firstname er type hisebe
-            // lastName: "",
-            dob: new Date("27 April 2001"),
+            // lastName: "Sujon",
+            dob: new Date("27 April 1994"),
             passed: true,
             hobbies: [],
             parents: { // treat korche parents er object hisebe,jar ekta father property r mother property thakbe...
@@ -52,7 +52,9 @@ async function createStudent() {
         console.log(data);
 
     } catch (err) {
-        console.log(err.message);
+        for (field in err.errors) {
+            console.log(err.errors[field].message);
+        }
     }
 }
 createStudent();
