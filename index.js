@@ -16,25 +16,48 @@ const studentSchema = new mongoose.Schema({
         father: String,
         mother: String,
     },
-    subjects: [{ name: String, marks: { type: Number, min: 0, max: 100 } }],
+    subjects: [{ name: String, marks: { type: Number, min: 0, max: 65 } }],
 
 });
 
 // Model / table
 const Student = mongoose.model('Student', studentSchema); // Class
-const student = new Student({
-    firstName: "Karim", // treat korche firstname er type hisebe
-    lastName: "Hossain",
-    dob: new Date("27 April 1995"),
-    passed: true,
-    hobbies: ["Swimming", "Singing"],
-    parents: { // treat korche parents er object hisebe,jar ekta father property r mother property thakbe...
-        father: "A",
-        mother: "B",
-    },
-    subjects: [{ name: "Math", marks: 80 }, { name: "English", marks: 90 }],
-});
+// C=> Create
+async function createStudent() {
+    const student = new Student({
+        firstName: "Fazle", // treat korche firstname er type hisebe
+        lastName: "Nur",
+        dob: new Date("27 April 1995"),
+        passed: true,
+        hobbies: ["Swimming", "Singing"],
+        parents: { // treat korche parents er object hisebe,jar ekta father property r mother property thakbe...
+            father: "A",
+            mother: "B",
+        },
+        subjects: [{ name: "Math", marks: 80 }, { name: "English", marks: 90 }],
+    });
 
-student.save()
-    .then(data => console.log(data))
-    .catch(err => console.log(err._message));
+    try {
+        const data = await student.save();
+        console.log(data);
+    } catch (err) {
+        console.log(err._message);
+    }
+
+
+
+}
+
+// createStudent();
+
+// R=> Read
+async function readStudents() {
+    const studentData = await Student
+        .find()
+        .limit(3)
+        .sort({ firstName: -1, lastName: 1 })
+        .select({ firstName: 1, lastName: 1, hobbies: 1 });
+    console.log(studentData);
+}
+
+readStudents();
