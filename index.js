@@ -16,6 +16,10 @@ const studentSchema = new mongoose.Schema({
         father: String,
         mother: String,
     },
-    subjects: [{ name: String, marks: { type: Number, min: 0, max: 100 } }]
+    subjects: [{ name: String, marks: { type: Number, min: 0, max: 100 } }],
+    example: {
+        a: String,
+        type: { type: String },
+    }
 
 })
