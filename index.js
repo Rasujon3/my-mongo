@@ -17,9 +17,24 @@ const studentSchema = new mongoose.Schema({
         mother: String,
     },
     subjects: [{ name: String, marks: { type: Number, min: 0, max: 100 } }],
-    example: {
-        a: String,
-        type: { type: String },
-    }
 
-})
+});
+
+// Model / table
+const Student = mongoose.model('Student', studentSchema); // Class
+const student = new Student({
+    firstName: "Karim", // treat korche firstname er type hisebe
+    lastName: "Hossain",
+    dob: new Date("27 April 1995"),
+    passed: true,
+    hobbies: ["Swimming", "Singing"],
+    parents: { // treat korche parents er object hisebe,jar ekta father property r mother property thakbe...
+        father: "A",
+        mother: "B",
+    },
+    subjects: [{ name: "Math", marks: 80 }, { name: "English", marks: 90 }],
+});
+
+student.save()
+    .then(data => console.log(data))
+    .catch(err => console.log(err._message));
